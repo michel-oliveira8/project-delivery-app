@@ -4,10 +4,10 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 
 function Routes() {
-  const loggedIn = true;
+  const loggedIn = false;
   return (
     <Switch>
-      <Route element={ loggedIn ? <Navigate to="/login" /> : <Home /> } path="/" />
+      <Route element={ loggedIn ? <Home /> : <Navigate to="/login" /> } path="/" />
       <Route element={ <Login /> } path="/login" />
     </Switch>
   );
