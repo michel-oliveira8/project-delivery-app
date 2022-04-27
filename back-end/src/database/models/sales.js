@@ -9,7 +9,11 @@ const Sales = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
   });
 
-  return Sales;
+  Sales.associate = (models) => {
+    Sales.hasMany(models.Users, { foreignKey: "id", as: "users" });
+  };
+
+  return Sales; 
 };
 
 module.exports = Sales;
