@@ -4,7 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 
 function Routes() {
-  const loggedIn = false;
+  const loggedIn = true;
   return (
     <Switch>
       <Route element={ loggedIn ? <Navigate to="/login" /> : <Home /> } path="/" />
