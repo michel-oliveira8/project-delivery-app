@@ -7,7 +7,10 @@ function Routes() {
   const loggedIn = false;
   return (
     <Switch>
-      <Route element={ loggedIn ? <Home /> : <Navigate to="/login" /> } path="/" />
+      <Route
+        element={ loggedIn ? <Home /> : <Navigate to="/login" /> }
+        path="/"
+      />
       <Route element={ <Login /> } path="/login" />
     </Switch>
   );

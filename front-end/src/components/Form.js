@@ -2,31 +2,41 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 function Form() {
-  const EMAIL_VALIDATION = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i
-  const { register, handleSubmit, watch, formState: { errors, isValid } } = useForm({
-    mode: "onChange"
+  const EMAIL_VALIDATION = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+  const {
+    register,
+    handleSubmit,
+    // watch,
+    formState: { isValid },
+  } = useForm({
+    mode: 'onChange',
   });
 
-  const onSubmit = data => console.log(data)
+  const onSubmit = (data) => console.log(data);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>
+    <form onSubmit={ handleSubmit(onSubmit) }>
+      <label htmlFor="email">
         Email
         <input
-          {...register("email", { required: true, pattern: {
-            value: EMAIL_VALIDATION,
-            message: 'Invalid email'
-          } })}
+          id="email"
+          { ...register('email', {
+            required: true,
+            pattern: {
+              value: EMAIL_VALIDATION,
+              message: 'Invalid email',
+            },
+          }) }
           placeholder="email@trybe.com.br"
           data-testid="common_login__input-email"
         />
       </label>
-      <label>
+      <label htmlFor="password">
         Senha
         <input
+          id="password"
           type="password"
-          {...register("password", { required: true, minLength: 6  })}
+          { ...register('password', { required: true, minLength: 6 }) }
           placeholder="*******"
           data-testid="common_login__input-password"
         />
@@ -35,14 +45,11 @@ function Form() {
         <button
           type="submit"
           data-testid="common_login__button-login"
-          disabled={!isValid}
+          disabled={ !isValid }
         >
           Login
         </button>
-        <button
-          type="button"
-          data-testid="common_login__button-register"
-        >
+        <button type="button" data-testid="common_login__button-register">
           Ainda não tenho conta
         </button>
       </div>
@@ -53,7 +60,7 @@ function Form() {
         { errors.email?.type === "required" && <span>Email is required</span>} */}
       </div>
     </form>
-  )
+  );
 }
 
 export default Form;
