@@ -6,7 +6,6 @@ function Form() {
   const {
     register,
     handleSubmit,
-    // watch,
     formState: { isValid },
   } = useForm({
     mode: 'onChange',
