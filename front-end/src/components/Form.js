@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Form() {
   const [loginInvalid, setLoginInvalid] = useState(true);
+
+  const navigate = useNavigate();
 
   const EMAIL_VALIDATION = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
   const {
@@ -17,9 +20,7 @@ function Form() {
 
   const onSubmit = async (data) => {
     axios.post('http://localhost:3001/login', data)
-      .then((database) => {
-        console.log(database);
-      })
+      .then(async () => navigate('/customer/products'))
       .catch(() => setLoginInvalid(false));
   };
 
