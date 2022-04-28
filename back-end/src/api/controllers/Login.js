@@ -5,11 +5,7 @@ const getLogin = async (req, res) => {
 
   const user = await services.getLogin(email, password);
 
-  if (!user) {
-    return res.status(204).json({ message: "not exists" });
-  }
-
-  return res.status(200).json(user.dataValues);
+  return res.status(user.status).json(user.data);
 };
 
 module.exports = { getLogin };
