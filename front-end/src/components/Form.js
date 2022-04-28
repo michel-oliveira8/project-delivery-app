@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Form() {
+  const [loginInvalid, setLoginInvalid] = useState(true);
+
+  const navigate = useNavigate();
+
   const EMAIL_VALIDATION = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
   const {
     register,
@@ -11,7 +17,11 @@ function Form() {
     mode: 'onChange',
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    axios.post('http://localhost:3001/login', data)
+      .then(async () => navigate('/customer/products'))
+      .catch(() => setLoginInvalid(false));
+  };
 
   return (
     <form onSubmit={ handleSubmit(onSubmit) }>
@@ -52,7 +62,10 @@ function Form() {
           Ainda não tenho conta
         </button>
       </div>
-      <div data-testid="common_login__element-invalid-email">
+      <div>
+        <p hidden={ loginInvalid } data-testid="common_login__element-invalid-email">
+          Email ou senha invalida!!
+        </p>
         {/* { errors.email?.message && <span>Email is invalid</span>}
         { errors.password?.type === "minLength" && <span>Password is less than 6 characters</span>}
         { errors.password?.type === "required" && <span>Password is required</span>}
