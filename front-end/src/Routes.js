@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes as Switch, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Client from './pages/Client';
 
 function Routes() {
   const loggedIn = false;
@@ -12,6 +13,7 @@ function Routes() {
         path="/"
       />
       <Route element={ <Login /> } path="/login" />
+      <Route element={ <Client /> } path="/customer/products" />
     </Switch>
   );
 }
