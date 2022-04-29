@@ -58,7 +58,11 @@ function Form() {
         >
           Login
         </button>
-        <button type="button" data-testid="common_login__button-register">
+        <button
+          type="button"
+          data-testid="common_login__button-register"
+          onClick={ () => navigate('/register') }
+        >
           Ainda não tenho conta
         </button>
       </div>
