@@ -2,7 +2,6 @@ const { user } = require('../../database/models');
 
 const getLogin = async (email, password) => {
   const res = await user.findOne({ where: { email, password } });
-
   if (!res) {
     return {
       status: 404,
