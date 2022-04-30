@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 function Form() {
+  const [registerInvalid, setRegisterInvalid] = useState(true);
   const EMAIL_VALIDATION = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -12,7 +17,11 @@ function Form() {
     mode: 'onChange',
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    axios.post('http://localhost:3001/register', data)
+      .then(async () => navigate('/customer/products'))
+      .catch(() => setRegisterInvalid(false));
+  };
 
   return (
     <form onSubmit={ handleSubmit(onSubmit) }>
@@ -64,7 +73,10 @@ function Form() {
         Cadastrar
       </button>
       <div>
-        <p hidden data-testid="common_register__element-invalid_register">
+        <p
+          hidden={ registerInvalid }
+          data-testid="common_register__element-invalid_register"
+        >
           Dados inválidos
         </p>
       </div>

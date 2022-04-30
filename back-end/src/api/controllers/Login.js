@@ -9,4 +9,6 @@ const getLogin = async (req, res) => {
   return res.status(user.status).json(user.data);
 };
 
-module.exports = { getLogin };
+module.exports = {
+   getLogin,
+};
