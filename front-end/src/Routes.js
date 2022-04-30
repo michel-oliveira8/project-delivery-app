@@ -7,14 +7,15 @@ import Register from './pages/Register';
 
 function Routes() {
   const loggedIn = false;
+
   return (
     <Switch>
       <Route
         element={ loggedIn ? <Home /> : <Navigate to="/login" /> }
         path="/"
       />
-      <Route element={ <Register /> } path="/register" />
       <Route element={ <Login /> } path="/login" />
+      <Route element={ <Register /> } path="/register" />
       <Route element={ <Client /> } path="/customer/products" />
     </Switch>
   );

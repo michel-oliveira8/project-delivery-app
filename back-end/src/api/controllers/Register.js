@@ -4,7 +4,7 @@ const services = require('../services/Register');
 const create = async (req, res) => {
   const { name, email, password } = req.body;
 
-  const createUser = await services.create(name, email, md5(password), 'seller');
+  const createUser = await services.create(name, email, md5(password), 'customer');
   
   return res.status(createUser.status).json(createUser.message);
 };

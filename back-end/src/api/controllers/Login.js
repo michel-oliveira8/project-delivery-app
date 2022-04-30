@@ -10,5 +10,5 @@ const getLogin = async (req, res) => {
 };
 
 module.exports = {
-   getLogin,
+  getLogin,
 };
