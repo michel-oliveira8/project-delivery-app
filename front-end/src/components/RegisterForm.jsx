@@ -17,7 +17,7 @@ function Form() {
     mode: 'onChange',
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     axios.post('http://localhost:3001/register', data)
       .then(() => navigate('/customer/products'))
       .catch(() => setRegisterInvalid(false));
