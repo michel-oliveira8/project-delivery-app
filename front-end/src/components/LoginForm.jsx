@@ -17,9 +17,12 @@ function Form() {
     mode: 'onChange',
   });
 
-  const onSubmit = async (data) => {
-    axios.post('http://localhost:3001/login', data)
-      .then(async () => navigate('/customer/products'))
+  const onSubmit = (user) => {
+    axios.post('http://localhost:3001/login', user)
+      .then(({ data }) => {
+        localStorage.setItem('user', JSON.stringify(data));
+        navigate('/customer/products');
+      })
       .catch(() => setLoginInvalid(false));
   };
 
