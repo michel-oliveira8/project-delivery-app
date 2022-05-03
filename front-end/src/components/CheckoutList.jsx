@@ -11,61 +11,78 @@ function CheckoutList() {
     setProdutos(pedidos);
   }, []);
 
+  const handleRemove = (e) => {
+    const filter = produtos.filter((local) => local.id !== Number(e.target.id));
+    const total = filter
+      .reduce((acc, { price, quantity }) => (price * quantity) + acc, 0);
+    const finalPrice = total.toFixed(2).replace('.', ',');
+    setProdutos(filter);
+    setTotalPrice(finalPrice);
+    localStorage.setItem('pedidos', JSON.stringify(filter));
+    localStorage.setItem('carrinho', JSON.stringify(finalPrice));
+  };
+
   return (
     <div>
       <h2>Finalizar Pedido</h2>
       <table>
-        <tr>
-          <th>Item</th>
-          <th>Descrição</th>
-          <th>Quantidade</th>
-          <th>Valor Unitário</th>
-          <th>Sub-Total</th>
-          <th>Remover Item</th>
-        </tr>
-        {produtos.map(({ price, name, quantity }, id) => (
-          <tr key={ id }>
-            <td
-              data-testid={ `customer_checkout__element-order-table-item-number-${id}` }
-            >
-              {id + 1}
-            </td>
-            <td
-              data-testid={ `customer_checkout__element-order-table-name-${id}` }
-            >
-              {name}
-            </td>
-            <td
-              data-testid={ `customer_checkout__element-order-table-quantity-${id}` }
-            >
-              {quantity}
-            </td>
-            <td
-              data-testid={ `customer_checkout__element-order-table-unit-price-${id}` }
-            >
-              {price}
-            </td>
-            <td
-              data-testid={ `customer_checkout__element-order-table-sub-total-${id}` }
-            >
-              {(price * quantity).toFixed(2)}
-            </td>
-            <td>
-              <button
-                data-testid={ `customer_checkout__element-order-table-remove-${id}` }
-                type="button"
-              >
-                Remover Item
-              </button>
-            </td>
+        <thead>
+          <tr>
+            <td>Item</td>
+            <td>Descrição</td>
+            <td>Quantidade</td>
+            <td>Valor Unitário</td>
+            <td>Sub-Total</td>
+            <td>Remover Item</td>
           </tr>
-        ))}
-        <span
-          data-testid="customer_checkout__element-order-total-price"
-        >
-          { `Total: R$ ${totalPrice}` }
-        </span>
+        </thead>
+        <tbody>
+          {produtos.map(({ id, price, name, quantity }, it) => (
+            <tr key={ it }>
+              <td
+                data-testid={ `customer_checkout__element-order-table-item-number-${it}` }
+              >
+                {it + 1}
+              </td>
+              <td
+                data-testid={ `customer_checkout__element-order-table-name-${it}` }
+              >
+                {name}
+              </td>
+              <td
+                data-testid={ `customer_checkout__element-order-table-quantity-${it}` }
+              >
+                {quantity}
+              </td>
+              <td
+                data-testid={ `customer_checkout__element-order-table-unit-price-${it}` }
+              >
+                {price.replace('.', ',')}
+              </td>
+              <td
+                data-testid={ `customer_checkout__element-order-table-sub-total-${it}` }
+              >
+                {(price * quantity).toFixed(2).replace('.', ',')}
+              </td>
+              <td>
+                <button
+                  onClick={ handleRemove }
+                  id={ id }
+                  data-testid={ `customer_checkout__element-order-table-remove-${it}` }
+                  type="button"
+                >
+                  Remover Item
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
+      <span
+        data-testid="customer_checkout__element-order-total-price"
+      >
+        { `Total: R$ ${totalPrice}` }
+      </span>
     </div>
   );
 }
