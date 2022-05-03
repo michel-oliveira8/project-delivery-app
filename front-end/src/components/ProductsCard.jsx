@@ -13,10 +13,13 @@ function ProductsCard({ value }) {
 
   return (
     <div>
-      <p data-testid={ `customer_products__element-card-price-${id}` }>{price}</p>
+      <p data-testid={ `customer_products__element-card-price-${id}` }>
+        {price.replace('.', ',')}
+      </p>
       <img
-        src={ name }
-        alt={ urlImage }
+        src={ urlImage }
+        alt={ name }
+        height="250px"
         data-testid={ `customer_products__img-card-bg-image-${id}` }
       />
       <p data-testid={ `customer_products__element-card-title-${id}` }>{name}</p>
