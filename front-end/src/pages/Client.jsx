@@ -7,6 +7,7 @@ import ProductsCard from '../components/ProductsCard';
 function Client() {
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [aviso, setAviso] = useState(false);
 
   const navigate = useNavigate();
 
@@ -18,7 +19,14 @@ function Client() {
 
   useEffect(() => {
     localStorage.setItem('carrinho', JSON.stringify(totalPrice.toFixed(2)));
-  }, [totalPrice]);
+    const pedidos = JSON.parse(localStorage.getItem('pedidos'));
+    if (pedidos) {
+      const total = pedidos
+        .reduce((acc, { price, quantity }) => (price * quantity) + acc, 0);
+      setTotalPrice(total);
+      setAviso(false);
+    }
+  }, [totalPrice, aviso]);
 
   return (
     <div>
@@ -27,7 +35,7 @@ function Client() {
         <ProductsCard
           key={ product.id }
           value={ product }
-          priceFinal={ { setTotalPrice, totalPrice } }
+          priceFinal={ { setAviso } }
         />
       ))}
       <button

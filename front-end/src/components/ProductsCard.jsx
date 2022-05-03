@@ -1,26 +1,54 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function ProductsCard({ value, priceFinal }) {
-  const [quantity, setQuantity] = useState(0);
-
+  const [quantity, setQuantity] = useState();
   const { id, price, name, url_image: urlImage } = value;
-  const { setTotalPrice, totalPrice } = priceFinal;
+  const { setAviso } = priceFinal;
+  const [product, setProduct] = useState({
+    id,
+    price,
+    quantity,
+  });
+
+  useEffect(() => {
+    const getLocal = JSON.parse(localStorage.getItem('pedidos'));
+    if (getLocal) {
+      const [filter] = getLocal.filter((local) => local.id === id);
+      if (filter) return setQuantity(filter.quantity);
+    }
+    setQuantity(0);
+  }, [id]);
+
+  useEffect(() => {
+    let getLocal = JSON.parse(localStorage.getItem('pedidos'));
+    if (!getLocal) {
+      getLocal = [];
+    }
+    const filter = getLocal.filter((local) => local.id !== id);
+    if (product.quantity !== 0) filter.push(product);
+    localStorage.setItem('pedidos', JSON.stringify(filter));
+  }, [product, id]);
+
+  useEffect(() => {
+    setProduct({
+      id,
+      price,
+      quantity,
+    });
+  }, [quantity, id, price]);
 
   const changeQuantity = (e) => {
+    setAviso(true);
     if (e.target.innerText === '+') {
       setQuantity(quantity + 1);
-      return setTotalPrice(totalPrice + Number(e.target.parentElement.id));
-    } if (e.target.innerText === '-') {
+    } else if (e.target.innerText === '-') {
       setQuantity(quantity - 1);
-      return setTotalPrice(totalPrice - Number(e.target.parentElement.id));
-    }
-    setQuantity(Number(e.target.value));
-    setTotalPrice(e.target.value * Number(e.target.parentElement.id));
+    } else setQuantity(Number(e.target.value));
   };
 
   return (
-    <div id={ price }>
+    <div>
       <p data-testid={ `customer_products__element-card-price-${id}` }>
         {price.replace('.', ',')}
       </p>
@@ -43,13 +71,13 @@ function ProductsCard({ value, priceFinal }) {
         type="number"
         onChange={ changeQuantity }
         value={ quantity }
-        id={ price.replace('.', ',') }
         min="0"
         data-testid={ `customer_products__input-card-quantity-${id}` }
       />
       <button
         type="button"
         onClick={ changeQuantity }
+        value={ quantity }
         data-testid={ `customer_products__button-card-add-item-${id}` }
       >
         +
@@ -66,8 +94,7 @@ ProductsCard.propTypes = {
     url_image: PropTypes.string,
   }).isRequired,
   priceFinal: PropTypes.shape({
-    setTotalPrice: PropTypes.func,
-    totalPrice: PropTypes.number,
+    setAviso: PropTypes.func,
   }).isRequired,
 };
 
