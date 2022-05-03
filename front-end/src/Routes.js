@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Client from './pages/Client';
 import Register from './pages/Register';
+import Checkout from './pages/Checkout';
 
 function Routes() {
   const loggedIn = false;
@@ -17,6 +18,7 @@ function Routes() {
       <Route element={ <Login /> } path="/login" />
       <Route element={ <Register /> } path="/register" />
       <Route element={ <Client /> } path="/customer/products" />
+      <Route element={ <Checkout /> } path="/customer/checkout" />
     </Switch>
   );
 }
