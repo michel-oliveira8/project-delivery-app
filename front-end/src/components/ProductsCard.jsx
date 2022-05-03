@@ -1,18 +1,26 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-function ProductsCard({ value }) {
+function ProductsCard({ value, priceFinal }) {
   const [quantity, setQuantity] = useState(0);
 
   const { id, price, name, url_image: urlImage } = value;
+  const { setTotalPrice, totalPrice } = priceFinal;
 
-  const changeQuantity = ({ target }) => {
-    if (target.innerText === '+') return setQuantity(quantity + 1);
-    return setQuantity(quantity - 1);
+  const changeQuantity = (e) => {
+    if (e.target.innerText === '+') {
+      setQuantity(quantity + 1);
+      return setTotalPrice(totalPrice + Number(e.target.parentElement.id));
+    } if (e.target.innerText === '-') {
+      setQuantity(quantity - 1);
+      return setTotalPrice(totalPrice - Number(e.target.parentElement.id));
+    }
+    setQuantity(Number(e.target.value));
+    setTotalPrice(e.target.value * Number(e.target.parentElement.id));
   };
 
   return (
-    <div>
+    <div id={ price }>
       <p data-testid={ `customer_products__element-card-price-${id}` }>
         {price.replace('.', ',')}
       </p>
@@ -33,8 +41,10 @@ function ProductsCard({ value }) {
       </button>
       <input
         type="number"
-        readOnly
+        onChange={ changeQuantity }
         value={ quantity }
+        id={ price.replace('.', ',') }
+        min="0"
         data-testid={ `customer_products__input-card-quantity-${id}` }
       />
       <button
@@ -54,6 +64,10 @@ ProductsCard.propTypes = {
     name: PropTypes.string,
     price: PropTypes.string,
     url_image: PropTypes.string,
+  }).isRequired,
+  priceFinal: PropTypes.shape({
+    setTotalPrice: PropTypes.func,
+    totalPrice: PropTypes.number,
   }).isRequired,
 };
 
