@@ -6,6 +6,7 @@ import Client from './pages/Client';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import Order from './pages/Order';
+import OrderDetails from './pages/OrderDetails';
 
 function Routes() {
   const loggedIn = false;
@@ -22,6 +23,7 @@ function Routes() {
       <Route element={ <Checkout /> } path="/customer/checkout" />
       <Route element={ <Checkout /> } path="/customer/checkout" />
       <Route element={ <Order /> } path="/customer/order" />
+      <Route element={ <OrderDetails /> } path="/customer/order/:id" />
     </Switch>
   );
 }

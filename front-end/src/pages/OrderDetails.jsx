@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 
-function OrderDetails({
-  numeroPedido, nomeVendedor, dataPedido, statusPedido, itens, precoTotal,
-}) {
+function OrderDetails(props) {
+  const [order, setOrder] = useState({});
+  const { match: { params: { id } } } = props;
+
   const nomeDosCamposTabela = [
     'Item',
     'Descrição',
@@ -11,6 +12,12 @@ function OrderDetails({
     'Valor Unitário',
     'Sub-total',
   ];
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/sales/${id}`)
+      .then((res) => res.json())
+      .then((res) => setOrder(res));
+  }, []);
   return (
     <div>
       <h3>Detalhes do Pedido</h3>
@@ -20,25 +27,25 @@ function OrderDetails({
             data-testid="customer_order_details__element-order-details-label-order-id"
           >
             Pedido
-            { numeroPedido }
+            { order.numeroPedido }
             ;
           </p>
           <p
             data-testid="customer_order_details__element-order-details-label-seller-name"
           >
             P.Vend:
-            { nomeVendedor }
+            { order.nomeVendedor }
           </p>
           <p
             data-testid="customer_order_details__element-order-details-label-order-date"
           >
-            { dataPedido }
+            { order.dataPedido }
           </p>
           <p
             data-testid="customer_order_details__element
             -order-details-label-delivery-status"
           >
-            { statusPedido }
+            { order.statusPedido }
 
           </p>
           <button
@@ -57,7 +64,7 @@ function OrderDetails({
             </tr>
           </thead>
           <tbody>
-            { itens.map((item) => (
+            { order.products.map((item) => (
               <tr key={ item }>
                 <td
                   data-testid="customer_order_details__element-order-table-item-number-"
