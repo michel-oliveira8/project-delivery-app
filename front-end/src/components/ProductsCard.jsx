@@ -9,6 +9,7 @@ function ProductsCard({ value, priceFinal }) {
     id,
     price,
     quantity,
+    name,
   });
 
   useEffect(() => {
@@ -35,8 +36,9 @@ function ProductsCard({ value, priceFinal }) {
       id,
       price,
       quantity,
+      name,
     });
-  }, [quantity, id, price]);
+  }, [quantity, id, price, name]);
 
   const changeQuantity = (e) => {
     setAviso(true);

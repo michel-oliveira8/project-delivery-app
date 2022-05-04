@@ -19,11 +19,14 @@ function NavBar() {
       >
         PRODUTOS
       </a>
-      <a href=".." data-testid="customer_products__element-navbar-link-orders">
+      <a
+        href="/customer/checkout"
+        data-testid="customer_products__element-navbar-link-orders"
+      >
         MEUS PEDIDOS
       </a>
       <a
-        href=".."
+        href="/perfil"
         data-testid="customer_products__element-navbar-user-full-name"
       >
         { name }
