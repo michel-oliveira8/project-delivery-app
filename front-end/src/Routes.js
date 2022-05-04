@@ -23,6 +23,6 @@ function Routes() {
       <Route element={ <OrderDetails /> } path="/customer/orders/:id" />
     </Switch>
   );
-}s
+}
 
 export default Routes;

@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,11 +13,11 @@ function DeliveyDetails() {
     // .catch(() => );
   }, []);
 
-  const subimitOrder = (sale) => {
-    axios.post('http://localhost:3001/sales', sale)
-      .then((saleId) => navigate(`/customer/orders/${saleId}`)) //trocar saleId para resposta do backend
-  }
-
+  const subimitOrder = () => {
+    // axios.post('http://localhost:3001/sales', sale)
+    //   .then((saleId) => navigate(`/customer/orders/${saleId}`)) //trocar saleId para resposta do backend
+    navigate('/customer/orders/3');
+  };
 
   return (
     <div>
@@ -55,7 +55,7 @@ function DeliveyDetails() {
         <button
           data-testid="customer_checkout__button-submit-order"
           type="button"
-          onClick= { subimitOrder }
+          onClick={ subimitOrder }
         >
           FINALIZAR PEDIDO
         </button>
