@@ -7,7 +7,7 @@ function DeliveyDetails() {
   const [sale, setSale] = useState(
     {
       user_id: 1,
-      seller_id: 1,
+      seller_id: 1,//pegar do backend
       total_price: 30,
       delivery_address: 'Rua x',
       delivery_number: '123',
