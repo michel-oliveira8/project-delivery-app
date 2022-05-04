@@ -4,7 +4,7 @@ const createToken = require('../../token/createToken');
 const getLogin = async (email, password) => {
   const res = await user.findOne({ 
     where: { email, password }, 
-    attributes: ['name', 'email', 'role'],
+    attributes: ['id', 'name', 'email', 'role'],
   });
 
   if (!res) {
