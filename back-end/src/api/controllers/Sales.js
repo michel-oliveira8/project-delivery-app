@@ -6,7 +6,7 @@ const create = async (req, res) => {
 
     const sale = await services.create(userData);
   
-    return res.status(sale.status).json({ sale_id: sale.saleId });
+    return res.status(sale.status).json({ saleId: sale.saleId });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

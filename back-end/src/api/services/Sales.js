@@ -1,20 +1,23 @@
 const { sale } = require('../../database/models');
 
 const create = async (userData) => {
-  const { user_id,
-    seller_id,
-    total_price,
-    delivery_address,
-    delivery_number,
+  const { userId,
+    sellerId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber,
     status } = userData;
 
   const createSale = await sale
-    .create({ user_id,
-      seller_id,
-      total_price,
-      delivery_address,
-      delivery_number,
-      status });
+    .create(
+      { userId,
+        sellerId,
+        totalPrice,
+        deliveryAddress,
+        deliveryNumber,
+        status,
+      },
+    );
 
   return { saleId: createSale.id, status: 201 };
 };
