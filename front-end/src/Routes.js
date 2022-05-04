@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Client from './pages/Client';
 import Register from './pages/Register';
 import Checkout from './pages/Checkout';
+import OrderDetails from './pages/OrderDetails';
 
 function Routes() {
   const loggedIn = false;
@@ -19,8 +20,9 @@ function Routes() {
       <Route element={ <Register /> } path="/register" />
       <Route element={ <Client /> } path="/customer/products" />
       <Route element={ <Checkout /> } path="/customer/checkout" />
+      <Route element={ <OrderDetails /> } path="/customer/orders/:id" />
     </Switch>
   );
-}
+}s
 
 export default Routes;

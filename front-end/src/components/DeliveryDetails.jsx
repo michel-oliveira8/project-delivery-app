@@ -1,13 +1,23 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function DeliveyDetails() {
   // const [sellers, setSellers] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // axios.get('http://localhost:3001/')
+    // axios.get('http://localhost:3001/') //buscar nome dos vendedores no backend
     // .then(() => )
     // .catch(() => );
   }, []);
+
+  const subimitOrder = (sale) => {
+    axios.post('http://localhost:3001/sales', sale)
+      .then((saleId) => navigate(`/customer/orders/${saleId}`)) //trocar saleId para resposta do backend
+  }
+
 
   return (
     <div>
@@ -45,6 +55,7 @@ function DeliveyDetails() {
         <button
           data-testid="customer_checkout__button-submit-order"
           type="button"
+          onClick= { subimitOrder }
         >
           FINALIZAR PEDIDO
         </button>
