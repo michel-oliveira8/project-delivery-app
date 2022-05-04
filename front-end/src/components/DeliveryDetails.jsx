@@ -6,18 +6,19 @@ function DeliveyDetails() {
   // const [sellers, setSellers] = useState([]);
   const [sale, setSale] = useState(
     {
-      user_id: 1,
-      seller_id: 1,//pegar do backend
-      total_price: 30,
-      delivery_address: 'Rua x',
-      delivery_number: '123',
+      userId: 1,
+      sellerId: 1,//pegar do backend
+      totalPrice: 0,
+      deliveryAddress: 'Rua x',
+      deliveryNumber: '123',
       status: 'Pendente',
     },
   );
 
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem('user')).id;
-    setSale({ ...sale, user_id: userId });
+    const userId = JSON.parse(localStorage.getItem('user')).id
+    const carrinho = JSON.parse(localStorage.getItem('carrinho'))
+    setSale({ ...sale, userId, totalPrice: Number(carrinho) });
   }, []);
 
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ function DeliveyDetails() {
 
   const subimitOrder = () => {
     axios.post('http://localhost:3001/sales', sale)
-      .then(({ saleId }) => navigate(`/customer/orders/${saleId}`));
+      .then(({ data: { saleId } }) => navigate(`/customer/orders/${saleId}`));
   };
 
   return (
