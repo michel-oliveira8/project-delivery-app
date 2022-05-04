@@ -7,6 +7,8 @@
   },
   "engineStrict": true,
   "scripts": {
+    "prepare": "husky install",
+    "commit": "git-cz",
     "pm2": "./node_modules/.bin/pm2",
     "jest": "./node_modules/.bin/jest",
     "start": "./scripts/prepare-for-test.sh",
@@ -32,9 +34,13 @@
   },
   "homepage": "https://github.com/betrybe/sd-0x-project-delivery-app#readme",
   "devDependencies": {
+    "@commitlint/cli": "^16.2.4",
+    "@commitlint/config-conventional": "^16.2.4",
     "@faker-js/faker": "6.0.0",
     "axios": "0.26.1",
+    "cz-conventional-changelog": "^3.3.0",
     "dotenv": "16.0.0",
+    "husky": "^7.0.4",
     "jest": "27.5.1",
     "jest-puppeteer": "6.1.0",
     "jsonwebtoken": "8.5.1",
@@ -53,6 +59,11 @@
       "__TESTID__": true,
       "__TESTDESC__": true,
       "__TESTFILE__": true
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }
