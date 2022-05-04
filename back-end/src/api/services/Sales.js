@@ -7,6 +7,7 @@ const create = async (userData) => {
     delivery_address,
     delivery_number,
     status } = userData;
+
   const createSale = await sale
     .create({ user_id,
       seller_id,
@@ -15,7 +16,7 @@ const create = async (userData) => {
       delivery_number,
       status });
 
-  return { message: createSale, status: 201 };
+  return { saleId: createSale.id, status: 201 };
 };
 
 module.exports = {

@@ -4,9 +4,9 @@ const create = async (req, res) => {
   try {
     const userData = req.body;
 
-    const createSale = await services.create(userData);
+    const sale = await services.create(userData);
   
-    return res.status(createSale.status).json(createSale.message);
+    return res.status(sale.status).json({ sale_id: sale.saleId });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
