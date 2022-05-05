@@ -1,5 +1,5 @@
 const md5 = require('md5');
-const services = require('../services/Register');
+const services = require('../services/Users');
 
 const create = async (req, res) => {
   try {
@@ -13,6 +13,19 @@ const create = async (req, res) => {
   }
 };
 
+const findByRole = async (req, res) => {
+  try {
+    const { role } = req.params;
+
+    const userList = await services.findByRole(role);
+    
+    return res.status(userList.status).json(userList.message);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   create,
+  findByRole,
 };

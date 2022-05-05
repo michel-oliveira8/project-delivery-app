@@ -3,11 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function DeliveyDetails() {
-  // const [sellers, setSellers] = useState([]);
+  const navigate = useNavigate();
+
+  const [sellerList, setSellerList] = useState([])
+  const [sellerId, setSellerId] = useState(0)
   const [sale, setSale] = useState(
     {
-      userId: 1,
-      sellerId: 1,
+      pedidos: [],
+      userId: 0,
+      sellerId: 0,
       totalPrice: 0,
       deliveryAddress: 'Rua x',
       deliveryNumber: '123',
@@ -15,23 +19,26 @@ function DeliveyDetails() {
     },
   );
 
-  useEffect(() => {
+  const setSaleDetails = () => {
     const userId = JSON.parse(localStorage.getItem('user')).id;
     const carrinho = JSON.parse(localStorage.getItem('carrinho'));
-    setSale({ ...sale, userId, totalPrice: Number(carrinho) });
-  }, []);
-
-  const navigate = useNavigate();
+    const pedidos = JSON.parse(localStorage.getItem('pedidos'));
+    setSale({ ...sale, sellerId, pedidos, userId, totalPrice: Number(carrinho) });
+  };
 
   useEffect(() => {
-    // buscar nome dos vendedores no backend
-    // axios.get('http://localhost:3001/')
-    // .then(() => )
-    // .catch(() => );
+    axios.get('http://localhost:3001/user/seller')
+      .then(({ data }) => {
+        setSellerList(data)
+        setSellerId(data[0].id)
+      })
   }, []);
 
   const subimitOrder = () => {
-    axios.post('http://localhost:3001/sales', sale)
+    const { token } = JSON.parse(localStorage.getItem('user'));
+    setSaleDetails()
+    axios.post('http://localhost:3001/sales', sale,
+      { headers: { Authorization: token } })
       .then(({ data: { saleId } }) => navigate(`/customer/orders/${saleId}`));
   };
 
@@ -44,8 +51,12 @@ function DeliveyDetails() {
             data-testid="customer_checkout__select-seller"
             name="seller"
             id="seller"
+            value={ sellerId }
+            onChange={ (e) => setSellerId(e.target.value) }
           >
-            <option value="">Cidinha do beco</option>
+            {sellerList.map(({ name, id }) => (
+              <option key={ id } value={ name }>{ name }</option>
+            ))}
           </select>
         </label>
         <label htmlFor="endereco">
