@@ -1,4 +1,4 @@
-const { sale } = require('../../database/models');
+const { sale, salesProduct } = require('../../database/models');
 
 const create = async (userData) => {
   const { userId,
@@ -6,7 +6,8 @@ const create = async (userData) => {
     totalPrice,
     deliveryAddress,
     deliveryNumber,
-    status } = userData;
+    status,
+    pedidos } = userData;
 
   const createSale = await sale
     .create(
@@ -19,9 +20,23 @@ const create = async (userData) => {
       },
     );
 
+    await Promise.all(pedidos.map(async ({id, quantity}) =>
+    await salesProduct.create({saleId: createSale.id, productId: id, quantity})
+  ));
+  
   return { saleId: createSale.id, status: 201 };
 };
 
+const findAll = async () => {
+  return sale.findAll();
+}
+
+const findById = async (id) => {
+  return sale.findByPk({ where: { id } });
+}
+
 module.exports = {
   create,
+  findAll,
+  findById
 };

@@ -12,6 +12,29 @@ const create = async (req, res) => {
   }
 };
 
+const findAll = async (req, res) => {
+  try {
+    const sale = await services.findAll();
+
+    return res.status(sale.status).json(sale);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
+const findById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sale = await services.findById(Number(id));
+
+    return res.status(sale.status).json(sale);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
 module.exports = {
   create,
+  findAll,
+  findById
 };
