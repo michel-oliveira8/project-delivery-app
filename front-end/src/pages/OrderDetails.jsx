@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-function OrderDetails(props) {
+function OrderDetails() {
   const [order, setOrder] = useState({});
-  const { match: { params: { id } } } = props;
+  console.log(order);
+  const { id } = useParams();
 
   const nomeDosCamposTabela = [
     'Item',
@@ -27,25 +29,25 @@ function OrderDetails(props) {
             data-testid="customer_order_details__element-order-details-label-order-id"
           >
             Pedido
-            { order.numeroPedido }
+            {/* { order.numeroPedido } */}
             ;
           </p>
           <p
             data-testid="customer_order_details__element-order-details-label-seller-name"
           >
             P.Vend:
-            { order.nomeVendedor }
+            {/* { order.nomeVendedor } */}
           </p>
           <p
             data-testid="customer_order_details__element-order-details-label-order-date"
           >
-            { order.dataPedido }
+            {/* { order.dataPedido } */}
           </p>
           <p
             data-testid="customer_order_details__element
             -order-details-label-delivery-status"
           >
-            { order.statusPedido }
+            {/* { order.statusPedido } */}
 
           </p>
           <button
@@ -64,7 +66,7 @@ function OrderDetails(props) {
             </tr>
           </thead>
           <tbody>
-            { order.products.map((item) => (
+            {/* { order.products.map((item) => (
               <tr key={ item }>
                 <td
                   data-testid="customer_order_details__element-order-table-item-number-"
@@ -92,14 +94,14 @@ function OrderDetails(props) {
                   Sub-total
                 </td>
               </tr>
-            ))}
+            ))} */}
           </tbody>
         </table>
 
         <h3
           data-testid="customer_order_details__element-order-total-price-"
         >
-          { precoTotal }
+          {/* { precoTotal } */}
         </h3>
       </div>
     </div>
