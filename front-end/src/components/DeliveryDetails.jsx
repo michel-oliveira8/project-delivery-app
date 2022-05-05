@@ -7,7 +7,7 @@ function DeliveyDetails() {
   const [sale, setSale] = useState(
     {
       userId: 1,
-      sellerId: 1,//pegar do backend
+      sellerId: 1,
       totalPrice: 0,
       deliveryAddress: 'Rua x',
       deliveryNumber: '123',
@@ -16,15 +16,16 @@ function DeliveyDetails() {
   );
 
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem('user')).id
-    const carrinho = JSON.parse(localStorage.getItem('carrinho'))
+    const userId = JSON.parse(localStorage.getItem('user')).id;
+    const carrinho = JSON.parse(localStorage.getItem('carrinho'));
     setSale({ ...sale, userId, totalPrice: Number(carrinho) });
   }, []);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // axios.get('http://localhost:3001/') //buscar nome dos vendedores no backend
+    // buscar nome dos vendedores no backend
+    // axios.get('http://localhost:3001/')
     // .then(() => )
     // .catch(() => );
   }, []);
