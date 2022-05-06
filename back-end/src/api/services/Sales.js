@@ -1,9 +1,7 @@
 const { sale, salesProduct } = require('../../database/models');
 
 const create = async (userData) => {
-  const { userId,
-    sellerId,
-    totalPrice,
+  const { userId, sellerId, totalPrice,
     deliveryAddress,
     deliveryNumber,
     status,
@@ -20,23 +18,24 @@ const create = async (userData) => {
       },
     );
 
-    await Promise.all(pedidos.map(async ({id, quantity}) =>
-    await salesProduct.create({saleId: createSale.id, productId: id, quantity})
-  ));
+    await Promise.all(pedidos.map(async ({ id, quantity }) =>
+    salesProduct.create({ saleId: createSale.id, productId: id, quantity })));
   
   return { saleId: createSale.id, status: 201 };
 };
 
-const findAll = async () => {
-  return sale.findAll();
-}
+const findAll = async () => { 
+  const sales = await sale.findAll({ raw: true });
 
-const findById = async (id) => {
-  return sale.findByPk({ where: { id } });
-}
+  console.log(sales);
+
+  return sales;
+};
+
+const findById = async (id) => sale.findByPk({ where: { id } });
 
 module.exports = {
   create,
   findAll,
-  findById
+  findById,
 };
