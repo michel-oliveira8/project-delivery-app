@@ -3,44 +3,44 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function DeliveryDetails() {
-  const navigate = useNavigate();
-
   const [sellerList, setSellerList] = useState([]);
-  const [sellerId, setSellerId] = useState(1);
-  const [address, setAddress] = useState('default');
-  const [number, setNumber] = useState('default');
-  const [pedidos, setPedidos] = useState([]);
+  const [sellerId, setSellerId] = useState(0);
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryNumber, setDeliveryNumber] = useState('');
   const [userId, setUserId] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [cart, setCart] = useState([]);
+  const [token, setToken] = useState('');
   const [sale, setSale] = useState(
     {
-      pedidos: [],
       userId: 1,
       sellerId: 1,
-      totalPrice: 0,
-      deliveryAddress: 'default',
-      deliveryNumber: 'default',
+      totalPrice: 1,
+      deliveryAddress: '',
+      deliveryNumber: '',
     },
   );
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    setPedidos(JSON.parse(localStorage.getItem('pedidos')));
+    setCart(JSON.parse(localStorage.getItem('pedidos')));
     setUserId(JSON.parse(localStorage.getItem('user')).id);
-    setTotalPrice(JSON.parse(localStorage.getItem('carrinho')));
+    setTotalPrice(Number(JSON.parse(localStorage.getItem('carrinho'))));
+    setToken(JSON.parse(localStorage.getItem('user')).token);
   }, []);
 
   useEffect(() => {
     setSale(
       {
-        pedidos,
         userId,
         sellerId,
         totalPrice,
-        deliveryAddress: address,
-        deliveryNumber: number,
+        deliveryAddress,
+        deliveryNumber,
       },
     );
-  }, [pedidos, userId, sellerId, totalPrice, address, number]);
+  }, [userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, cart]);
 
   useEffect(() => {
     axios.get('http://localhost:3001/user/seller')
@@ -50,11 +50,16 @@ function DeliveryDetails() {
       });
   }, []);
 
-  const submitOrder = () => {
-    const { token } = JSON.parse(localStorage.getItem('user'));
-    axios.post('http://localhost:3001/sales', sale, { headers: { Authorization: token } })
-      .then(({ data: { saleId } }) => navigate(`/customer/orders/${saleId}`))
-      .catch((err) => console.log(err));
+  const sendOrder = () => {
+    axios.post('http://localhost:3001/sales', sale, { headers: { authorization: token } })
+      .then((response) => {
+        console.log(response);
+        navigate(`/customer/orders/${response.data.id}`);
+      });
+    // {
+    //   axios.post(`http://localhost:3001/sales/${saleId}/products`, { cart });
+    //   navigate(`/customer/orders/${saleId}`);
+    // });
   };
 
   const handleChange = (e) => {
@@ -62,11 +67,11 @@ function DeliveryDetails() {
   };
 
   const handleNumber = (e) => {
-    setNumber(e.target.value);
+    setDeliveryNumber(e.target.value);
   };
 
   const handleAddress = (e) => {
-    setAddress(e.target.value);
+    setDeliveryAddress(e.target.value);
   };
 
   return (
@@ -75,7 +80,6 @@ function DeliveryDetails() {
         <h2>Detalhes e Endereço para Entrega</h2>
         <label htmlFor="seller">
           <select
-            required
             data-testid="customer_checkout__select-seller"
             name="seller"
             id="seller"
@@ -89,13 +93,12 @@ function DeliveryDetails() {
         </label>
         <label htmlFor="endereco">
           <input
-            required
             data-testid="customer_checkout__input-address"
             placeholder="Beco 135 - Morro dos Papagaios"
             type="text"
             name="endereco"
             id="endereco"
-            value={ address }
+            value={ deliveryAddress }
             onChange={ handleAddress }
           />
         </label>
@@ -106,7 +109,7 @@ function DeliveryDetails() {
             type="text"
             name="numero"
             id="numero"
-            value={ number }
+            value={ deliveryNumber }
             onChange={ handleNumber }
           />
         </label>
@@ -115,7 +118,8 @@ function DeliveryDetails() {
         <button
           data-testid="customer_checkout__button-submit-order"
           type="button"
-          onClick={ submitOrder }
+          onClick={ sendOrder }
+          disabled={ (deliveryAddress === '') || (deliveryNumber === '') }
         >
           FINALIZAR PEDIDO
         </button>

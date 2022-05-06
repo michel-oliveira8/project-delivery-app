@@ -1,42 +1,34 @@
 const { sale, salesProduct } = require('../../database/models');
 
-const create = async (userData) => {
-  const { userId,
-    sellerId,
-    totalPrice,
-    deliveryAddress,
-    deliveryNumber,
-    pedidos } = userData;
-
-  const createSale = await sale
-    .create(
-      { userId,
-        sellerId,
-        totalPrice,
-        deliveryAddress,
-        deliveryNumber,
-      },
-    );
-
-    
-    const products = await Promise.all(pedidos.map(async ({id, quantity}) =>
-    await salesProduct.create({saleId: createSale.id, productId: id, quantity})
-    ));
-    console.log(products)
+const create = async ({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber }) => {
+  const saleCreated = await sale
+    .create({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber });
+  if (!saleCreated) {
+    return {
+      status: 404,
+      data: { error: 'Not found' },
+    };
+  }
+  return saleCreated;
+};
   
-  return { saleId: createSale.id, status: 201 };
+const createSalesProducts = async (saleId, cart) => {
+  await Promise.all(cart.map(({ id, quantity }) =>
+    salesProduct.create({ saleId, productId: id, quantity })));
+  return { saleId, status: 201 };
 };
 
 const findAll = async () => {
-  return sale.findAll();
-}
+  await sale.findAll();
+};
 
 const findById = async (id) => {
-  return sale.findByPk({ where: { id } });
-}
+  await sale.findByPk({ where: { id } });
+};
 
 module.exports = {
   create,
   findAll,
-  findById
+  findById,
+  createSalesProducts,
 };

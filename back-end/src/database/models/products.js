@@ -7,7 +7,7 @@ const Product = (sequelize, DataTypes) => {
 
   Product.associate = (models) => {
     Product.hasMany(models.salesProduct, {
-      foreignKey: "product_id",
+      foreignKey: "productId",
       as: "product",
     });
   };
