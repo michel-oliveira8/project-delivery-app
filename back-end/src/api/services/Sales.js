@@ -1,27 +1,21 @@
 const { sale, salesProduct } = require('../../database/models');
 
-const create = async (userData) => {
-  const { userId, sellerId, totalPrice,
-    deliveryAddress,
-    deliveryNumber,
-    status,
-    pedidos } = userData;
-
-  const createSale = await sale
-    .create(
-      { userId,
-        sellerId,
-        totalPrice,
-        deliveryAddress,
-        deliveryNumber,
-        status,
-      },
-    );
-
-    await Promise.all(pedidos.map(async ({ id, quantity }) =>
-    salesProduct.create({ saleId: createSale.id, productId: id, quantity })));
+const create = async ({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber }) => {
+  const saleCreated = await sale
+    .create({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber });
+  if (!saleCreated) {
+    return {
+      status: 404,
+      data: { error: 'Not found' },
+    };
+  }
+  return saleCreated;
+};
   
-  return { saleId: createSale.id, status: 201 };
+const createSalesProducts = async (saleId, cart) => {
+  await Promise.all(cart.map(({ id, quantity }) =>
+    salesProduct.create({ saleId, productId: id, quantity })));
+  return { saleId, status: 201 };
 };
 
 const findAll = async () => { 
@@ -38,4 +32,5 @@ module.exports = {
   create,
   findAll,
   findById,
+  createSalesProducts,
 };

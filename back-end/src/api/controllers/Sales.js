@@ -2,11 +2,16 @@ const services = require('../services/Sales');
 
 const create = async (req, res) => {
   try {
-    const userData = req.body;
+    const { userId,
+    sellerId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber } = req.body;
 
-    const sale = await services.create(userData);
+    const saleCreated = await services
+      .create({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber });
   
-    return res.status(sale.status).json({ saleId: sale.saleId });
+    return res.status(201).json(saleCreated);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -33,8 +38,21 @@ const findById = async (req, res) => {
   }
 };
 
+const createSalesProducts = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { cart } = req.body;
+    const { status, saleId } = await services.createSalesProducts(Number(id), cart);
+  
+    return res.status(status).json({ saleId });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   create,
   findAll,
   findById,
+  createSalesProducts,
 };
