@@ -1,9 +1,9 @@
 const SalesProduct = (sequelize, DataTypes) => {
   const SalesProduct = sequelize.define("salesProduct", {
-    sale_id: DataTypes.INTEGER,
-    product_id: DataTypes.INTEGER,
+    saleId: DataTypes.INTEGER,
+    productId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
-  }, { tableName: 'salesProduct'});
+  }, { tableName: 'salesProducts', underscored: true, timestamps: false});
 
   SalesProduct.associate = (models) => {
     SalesProduct.belongsTo(models.sale, { foreignKey: "id", as: "sale" });

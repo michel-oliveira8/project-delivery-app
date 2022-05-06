@@ -3,15 +3,12 @@ import React, { useState, useEffect } from 'react';
 function StatusOrder() {
   const [order, setOrder] = useState([]);
 
-
   useEffect(() => {
     const userId  = JSON.parse(localStorage.getItem('user'))
-    console.log(userId);
-    // axios.get('http://localhost:3001/order/${userId.id}')
-    // .then(() => )
-    // .catch(() => );
+    axios.get('http://localhost:3001/sales')
+    .then((res) => setOrder(res))
+    .catch((err) => console.log(err) );
   }, []);
-
 
   return (
     <div>

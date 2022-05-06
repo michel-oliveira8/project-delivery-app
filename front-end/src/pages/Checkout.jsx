@@ -1,6 +1,6 @@
 import React from 'react';
 import CheckoutList from '../components/CheckoutList';
-import DeliveyDetails from '../components/DeliveyDetails';
+import DeliveryDetails from '../components/DeliveryDetails';
 import NavBar from '../components/NavBar';
 
 function Checkout() {
@@ -8,7 +8,7 @@ function Checkout() {
     <div>
       <NavBar />
       <CheckoutList />
-      <DeliveyDetails />
+      <DeliveryDetails />
     </div>
   );
 }
