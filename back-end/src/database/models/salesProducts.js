@@ -5,11 +5,11 @@ const SalesProduct = (sequelize, DataTypes) => {
     quantity: DataTypes.INTEGER,
   }, { tableName: 'salesProducts', underscored: true, timestamps: false});
 
-  // SalesProduct.associate = (models) => {
-  //   SalesProduct.belongsTo(models.sale, { foreignKey: "id", as: "sale" });
+  SalesProduct.associate = (models) => {
+    SalesProduct.belongsTo(models.sale, { foreignKey: "id", as: "sale" });
 
-  //   SalesProduct.belongsTo(models.product, { foreignKey: "id", as: "product" });
-  // };
+    SalesProduct.belongsTo(models.product, { foreignKey: "id", as: "product" });
+  };
 
   return SalesProduct;
 };

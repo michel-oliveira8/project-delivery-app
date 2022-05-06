@@ -1,9 +1,18 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 function DeliveyDetails() {
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+  });
 
   const [sellerList, setSellerList] = useState([]);
   const [sellerId, setSellerId] = useState(0);
@@ -12,8 +21,8 @@ function DeliveyDetails() {
   const [sale, setSale] = useState(
     {
       pedidos: [],
-      userId: 1,
-      sellerId: 1,
+      userId: 0,
+      sellerId: 0,
       totalPrice: 0,
       deliveryAddress: '',
       deliveryNumber: '',
@@ -49,8 +58,10 @@ function DeliveyDetails() {
     const { token } = JSON.parse(localStorage.getItem('user'));
     axios.post('http://localhost:3001/sales', sale,
       { headers: { Authorization: token } })
-      .then(({ data: { saleId } }) => navigate(`/customer/orders/${saleId}`))
-      .catch((err) => console.log(err));
+      .then(({ data: { saleId } }) => {
+        console.log(sale);
+        navigate(`/customer/orders/${saleId}`);
+      });
   };
 
   const handleChange = (e) => {
@@ -69,7 +80,7 @@ function DeliveyDetails() {
   };
 
   return (
-    <div>
+    <form onSubmit={ handleSubmit(submitOrder) }>
       <div>
         <h2>Detalhes e Endereço para Entrega</h2>
         <label htmlFor="seller">
@@ -87,24 +98,25 @@ function DeliveyDetails() {
         </label>
         <label htmlFor="endereco">
           <input
-            required
-            data-testid="customer_checkout__input-address"
-            placeholder="Beco 135 - Morro dos Papagaios"
-            type="text"
-            name="endereco"
             id="endereco"
+            type="text"
+            { ...register('endereco', {
+              required: true,
+              message: 'Invalid email',
+            }) }
+            placeholder="Beco 135 - Morro dos Papagaios"
+            data-testid="customer_checkout__input-address"
             value={ address }
             onChange={ handleAddress }
           />
         </label>
         <label htmlFor="numero">
           <input
-            required
-            data-testid="customer_checkout__input-addressNumber"
-            placeholder="125"
-            type="text"
-            name="numero"
             id="numero"
+            type="text"
+            { ...register('numero', { required: true }) }
+            placeholder="125"
+            data-testid="customer_checkout__input-addressNumber"
             value={ number }
             onChange={ handleNumber }
           />
@@ -113,13 +125,14 @@ function DeliveyDetails() {
       <div>
         <button
           data-testid="customer_checkout__button-submit-order"
-          type="button"
-          onClick={ submitOrder }
+          type="submit"
         >
           FINALIZAR PEDIDO
         </button>
+        {errors.endereco?.type === 'required' && 'Endereço obrigatório'}
+        {errors.numero?.type === 'required' && 'Número obrigatório'}
       </div>
-    </div>
+    </form>
   );
 }
 

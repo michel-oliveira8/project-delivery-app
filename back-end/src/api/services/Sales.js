@@ -20,9 +20,11 @@ const create = async (userData) => {
       },
     );
 
-    await Promise.all(pedidos.map(async ({id, quantity}) =>
+    
+    const products = await Promise.all(pedidos.map(async ({id, quantity}) =>
     await salesProduct.create({saleId: createSale.id, productId: id, quantity})
-  ));
+    ));
+    console.log(products)
   
   return { saleId: createSale.id, status: 201 };
 };

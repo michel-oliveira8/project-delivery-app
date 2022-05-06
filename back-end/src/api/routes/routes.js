@@ -8,10 +8,10 @@ const router = express.Router();
 
 router.post('/login', getLogin);
 router.post('/register', createUser);
+router.post('/sales', createSale);
 router.get('/user/:role', findByRole);
 router.get('/products', getAll);
 router.get('/sales', findAll);
 router.get('/sales/:id', findById);
-router.post('/sales', createSale);
 
 module.exports = router;

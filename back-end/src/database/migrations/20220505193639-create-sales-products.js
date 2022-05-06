@@ -13,20 +13,20 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         field: "sale_id",
-        // references: {
-        //   model: "sales",
-        //   key: "id",
-        // },
+        references: {
+          model: "sales",
+          key: "id",
+        },
       },
       productId: {
         primaryKey: true,
         allowNull: false,
         type: Sequelize.INTEGER,
         field: "product_id",
-        // references: {
-        //   model: "products",
-        //   key: "id",
-        // },
+        references: {
+          model: "products",
+          key: "id",
+        },
       },
       quantity: {
         allowNull: false,
