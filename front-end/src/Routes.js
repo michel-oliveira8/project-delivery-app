@@ -22,8 +22,8 @@ function Routes() {
       <Route element={ <Client /> } path="/customer/products" />
       <Route element={ <Checkout /> } path="/customer/checkout" />
       <Route element={ <Checkout /> } path="/customer/checkout" />
-      <Route element={ <Order /> } path="/customer/order" />
-      <Route element={ <OrderDetails /> } path="/customer/order/:id" />
+      <Route element={ <Order /> } path="/customer/orders" />
+      <Route element={ <OrderDetails /> } path="/customer/orders/:id" />
     </Switch>
   );
 }

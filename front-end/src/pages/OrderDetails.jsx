@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 function OrderDetails() {
   const [order, setOrder] = useState({});
   console.log(order);
-  const { id } = useParams();
 
   const nomeDosCamposTabela = [
     'Item',
@@ -16,9 +16,9 @@ function OrderDetails() {
   ];
 
   useEffect(() => {
-    fetch(`http://localhost:3001/sales/${id}`)
-      .then((res) => res.json())
-      .then((res) => setOrder(res));
+    axios
+      .get('http://localhost:3001/sales/')
+      .then(({ data }) => setOrder(data));
   }, []);
   return (
     <div>
