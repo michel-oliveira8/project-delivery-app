@@ -9,7 +9,10 @@ const Sale = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    status: DataTypes.STRING,
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'Pendente',
+    },
   }, { tableName: 'sales', underscored: true, timestamps: false });
 
   Sale.associate = (models) => {

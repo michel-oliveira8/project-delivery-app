@@ -45,7 +45,7 @@ function DeliveyDetails() {
       },
     );
   };
-
+  // { headers: { Authorization: token } }
   useEffect(() => {
     axios.get('http://localhost:3001/user/seller')
       .then(({ data }) => {

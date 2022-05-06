@@ -6,7 +6,6 @@ const create = async (userData) => {
     totalPrice,
     deliveryAddress,
     deliveryNumber,
-    status,
     pedidos } = userData;
 
   const createSale = await sale
@@ -16,7 +15,6 @@ const create = async (userData) => {
         totalPrice,
         deliveryAddress,
         deliveryNumber,
-        status,
       },
     );
 

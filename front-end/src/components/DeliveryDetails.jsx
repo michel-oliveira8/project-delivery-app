@@ -2,40 +2,45 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function DeliveyDetails() {
+function DeliveryDetails() {
   const navigate = useNavigate();
 
   const [sellerList, setSellerList] = useState([]);
-  const [sellerId, setSellerId] = useState(0);
-  const [address, setAddress] = useState('');
-  const [number, setNumber] = useState('');
+  const [sellerId, setSellerId] = useState(1);
+  const [address, setAddress] = useState('default');
+  const [number, setNumber] = useState('default');
+  const [pedidos, setPedidos] = useState([]);
+  const [userId, setUserId] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [sale, setSale] = useState(
     {
       pedidos: [],
       userId: 1,
       sellerId: 1,
       totalPrice: 0,
-      deliveryAddress: '',
-      deliveryNumber: '',
-      status: 'Pendente',
+      deliveryAddress: 'default',
+      deliveryNumber: 'default',
     },
   );
 
-  const setSaleDetails = () => {
-    const userId = JSON.parse(localStorage.getItem('user')).id;
-    const carrinho = JSON.parse(localStorage.getItem('carrinho'));
-    const pedidos = JSON.parse(localStorage.getItem('pedidos'));
+  useEffect(() => {
+    setPedidos(JSON.parse(localStorage.getItem('pedidos')));
+    setUserId(JSON.parse(localStorage.getItem('user')).id);
+    setTotalPrice(JSON.parse(localStorage.getItem('carrinho')));
+  }, []);
+
+  useEffect(() => {
     setSale(
-      { ...sale,
+      {
         pedidos,
-        sellerId,
         userId,
-        totalPrice: Number(carrinho),
+        sellerId,
+        totalPrice,
         deliveryAddress: address,
         deliveryNumber: number,
       },
     );
-  };
+  }, [pedidos, userId, sellerId, totalPrice, address, number]);
 
   useEffect(() => {
     axios.get('http://localhost:3001/user/seller')
@@ -47,25 +52,21 @@ function DeliveyDetails() {
 
   const submitOrder = () => {
     const { token } = JSON.parse(localStorage.getItem('user'));
-    axios.post('http://localhost:3001/sales', sale,
-      { headers: { Authorization: token } })
+    axios.post('http://localhost:3001/sales', sale, { headers: { Authorization: token } })
       .then(({ data: { saleId } }) => navigate(`/customer/orders/${saleId}`))
       .catch((err) => console.log(err));
   };
 
   const handleChange = (e) => {
     setSellerId(e.target.value);
-    setSaleDetails();
   };
 
   const handleNumber = (e) => {
     setNumber(e.target.value);
-    setSaleDetails();
   };
 
   const handleAddress = (e) => {
     setAddress(e.target.value);
-    setSaleDetails();
   };
 
   return (
@@ -74,6 +75,7 @@ function DeliveyDetails() {
         <h2>Detalhes e Endereço para Entrega</h2>
         <label htmlFor="seller">
           <select
+            required
             data-testid="customer_checkout__select-seller"
             name="seller"
             id="seller"
@@ -99,7 +101,6 @@ function DeliveyDetails() {
         </label>
         <label htmlFor="numero">
           <input
-            required
             data-testid="customer_checkout__input-addressNumber"
             placeholder="125"
             type="text"
@@ -123,4 +124,4 @@ function DeliveyDetails() {
   );
 }
 
-export default DeliveyDetails;
+export default DeliveryDetails;
