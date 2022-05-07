@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import Order from './pages/Order';
 import OrderDetails from './pages/OrderDetails';
+import SellerOrders from './pages/SellerOrders';
 
 function Routes() {
   const loggedIn = false;
@@ -24,6 +25,7 @@ function Routes() {
       <Route element={ <Checkout /> } path="/customer/checkout" />
       <Route element={ <Order /> } path="/customer/orders" />
       <Route element={ <OrderDetails /> } path="/customer/orders/:id" />
+      <Route element={ <SellerOrders /> } path="/seller/orders" />
     </Switch>
   );
 }
