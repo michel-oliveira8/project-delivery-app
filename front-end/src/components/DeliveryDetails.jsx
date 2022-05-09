@@ -53,8 +53,10 @@ function DeliveryDetails() {
   const sendOrder = () => {
     axios.post('http://localhost:3001/sales', sale, { headers: { authorization: token } })
       .then(({ data: { id } }) => {
-        axios.post(`http://localhost:3001/sales/${id}/products`, { cart });
-        navigate(`/customer/orders/${id}`);
+        axios.post(`http://localhost:3001/sales/${id}/products`, { cart })
+          .then(() => {
+            navigate(`/customer/orders/${id}`);
+          });
       });
   };
 
@@ -114,7 +116,7 @@ function DeliveryDetails() {
         <button
           data-testid="customer_checkout__button-submit-order"
           type="button"
-          onClick={ () => sendOrder() }
+          onClick={ sendOrder }
           disabled={ (deliveryAddress === '') || (deliveryNumber === '') }
         >
           FINALIZAR PEDIDO

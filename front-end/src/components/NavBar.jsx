@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 function NavBar() {
-  const [name, setName] = useState('');
+  const [nameUser, setNameUser] = useState('');
+  const [occupation, setOccupation] = useState('');
 
   useEffect(() => {
-    setName(JSON.parse(localStorage.getItem('user')).name);
+    const { name, role } = JSON.parse(localStorage.getItem('user'));
+    setNameUser(name);
+    setOccupation(role);
   }, []);
 
   const changeLogout = () => {
@@ -20,6 +23,7 @@ function NavBar() {
         PRODUTOS
       </a>
       <a
+        hidden={ occupation === 'seller' }
         href="/customer/checkout"
         data-testid="customer_products__element-navbar-link-orders"
       >
@@ -29,7 +33,7 @@ function NavBar() {
         href="/perfil"
         data-testid="customer_products__element-navbar-user-full-name"
       >
-        { name }
+        { nameUser }
       </a>
       <a
         href="/login"
