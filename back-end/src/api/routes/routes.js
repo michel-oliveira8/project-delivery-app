@@ -15,6 +15,5 @@ router.get('/user/:role', findByRole);
 router.get('/products', getAll);
 router.get('/sales/:id', findById);
 router.get('/sales', findAll);
-router.post('/sales', createSale);
 
 module.exports = router;

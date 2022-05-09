@@ -21,7 +21,9 @@ function Form() {
     axios.post('http://localhost:3001/login', user)
       .then(({ data }) => {
         localStorage.setItem('user', JSON.stringify(data));
-        navigate('/customer/products');
+        if (data.role === 'customer') navigate('/customer/products');
+        else if (data.role === 'seller') navigate('/seller/orders');
+        else navigate('');
       })
       .catch(() => setLoginInvalid(false));
   };

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import NavBar from '../components/NavBar';
 // import { useParams } from 'react-router-dom';
 
 function OrderDetails() {
@@ -20,8 +21,10 @@ function OrderDetails() {
       .get('http://localhost:3001/sales/')
       .then(({ data }) => setOrder(data));
   }, []);
+
   return (
     <div>
+      <NavBar />
       <h3>Detalhes do Pedido</h3>
       <div>
         <div>
