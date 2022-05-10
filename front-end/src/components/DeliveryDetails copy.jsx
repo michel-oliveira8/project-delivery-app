@@ -59,7 +59,6 @@ function DeliveyDetails() {
     axios.post('http://localhost:3001/sales', sale,
       { headers: { Authorization: token } })
       .then(({ data: { saleId } }) => {
-        console.log(sale);
         navigate(`/customer/orders/${saleId}`);
       });
   };

@@ -17,7 +17,6 @@ const checkoutNewSale = async (
     customerCheckoutPage.input.addressNumber,
     `${deliveryNumber}`
   );
-
   await expect(page).toWaitReqFinished({
     trigger: () =>
       expect(page).toClickOnElement({

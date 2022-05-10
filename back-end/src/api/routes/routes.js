@@ -1,6 +1,10 @@
 const express = require('express');
 const { getLogin } = require('../controllers/Login');
-const { create: createUser, findByRole, findUser } = require('../controllers/Users');
+const { create: createUser,
+  findByRole,
+  createAsAdmin,
+  findAllAsAdmin,
+  findUser } = require('../controllers/Users');
 const { getAll } = require('../controllers/Products');
 const { create: createSale,
   createSalesProducts, findAll, findById } = require('../controllers/Sales');
@@ -17,8 +21,10 @@ router.get('/sales/:id', findById);
 router.get('/sales', findAll);
 
 router.get('/user/:id/id', findUser);
-router.get('/user/:role', findByRole);
-
 router.get('/products', getAll);
+router.post('/register/admin', createAsAdmin);
+router.get('/user/:role', findByRole);
+router.get('/users/admin', findAllAsAdmin);
+router.get('/orders', findAll);
 
 module.exports = router;

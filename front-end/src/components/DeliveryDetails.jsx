@@ -54,14 +54,12 @@ function DeliveryDetails() {
 
   const sendOrder = () => {
     axios.post('http://localhost:3001/sales', sale, { headers: { authorization: token } })
-      .then((response) => {
-        console.log(response);
-        navigate(`/customer/orders/${response.data.id}`);
+      .then(({ data: { id } }) => {
+        axios.post(`http://localhost:3001/sales/${id}/products`, { cart })
+          .then(() => {
+            navigate(`/customer/orders/${id}`);
+          });
       });
-    // {
-    //   axios.post(`http://localhost:3001/sales/${saleId}/products`, { cart });
-    //   navigate(`/customer/orders/${saleId}`);
-    // });
   };
 
   const handleChange = (e) => {

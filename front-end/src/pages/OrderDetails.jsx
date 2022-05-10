@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import NavBar from '../components/NavBar';
 import { useParams } from 'react-router-dom';
 
 function OrderDetails() {
@@ -15,6 +16,7 @@ function OrderDetails() {
   const MAX = 10;
 
   const delivId = 'customer_order_details__element-order-details-label-delivery-status';
+
 
   const nomeDosCamposTabela = [
     'Item',
@@ -47,8 +49,10 @@ function OrderDetails() {
       });
   }, [id]);
 
+
   return (
     <div>
+      <NavBar />
       <h3>Detalhes do Pedido</h3>
       <div>
         <div>
