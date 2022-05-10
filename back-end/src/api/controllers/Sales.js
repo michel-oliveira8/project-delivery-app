@@ -6,10 +6,10 @@ const create = async (req, res) => {
     sellerId,
     totalPrice,
     deliveryAddress,
-    deliveryNumber } = req.body;
+    deliveryNumber, cart } = req.body;
 
     const saleCreated = await services
-      .create({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber });
+      .create({ userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, cart });
   
     return res.status(201).json(saleCreated);
   } catch (error) {

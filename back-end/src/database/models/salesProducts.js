@@ -6,12 +6,12 @@ const SalesProduct = (sequelize, DataTypes) => {
   }, { tableName: 'salesProducts', underscored: true, timestamps: false});
 
   SalesProduct.associate = (models) => {
-    SalesProduct.hasOne(models.product, 
-      { foreignKey: "id" }
+    SalesProduct.belongsToMany(models.product, 
+      { foreignKey: "id", otherKey: "productId", through: SalesProduct }
     );
 
-    SalesProduct.belongsTo(models.sale, 
-      { foreignKey: "id" }
+    SalesProduct.belongsToMany(models.sale, 
+      { foreignKey: "id", otherKey: "saleId", through: SalesProduct }
     )
   };
 
