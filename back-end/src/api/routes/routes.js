@@ -15,5 +15,6 @@ router.get('/user/:role', findByRole);
 router.get('/products', getAll);
 router.get('/sales/:id', findById);
 router.get('/sales', findAll);
+router.get('/orders', findAll);
 
 module.exports = router;
