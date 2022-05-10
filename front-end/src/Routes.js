@@ -8,6 +8,7 @@ import Checkout from './pages/Checkout';
 import Order from './pages/Order';
 import OrderDetails from './pages/OrderDetails';
 import SellerOrders from './pages/SellerOrders';
+import AdminManage from './pages/AdminManage';
 
 function Routes() {
   const loggedIn = false;
@@ -39,6 +40,7 @@ function Routes() {
       <Route element={ <Checkout /> } path="/customer/checkout" />
       <Route element={ <OrderDetails /> } path="/customer/orders/:id" />
       <Route element={ <SellerOrders /> } path="/seller/orders" />
+      <Route element={ <AdminManage /> } path="/admin/manage" />
     </Switch>
   );
 }

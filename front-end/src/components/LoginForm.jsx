@@ -23,6 +23,7 @@ function Form() {
         localStorage.setItem('user', JSON.stringify(data));
         if (data.role === 'customer') navigate('/customer/products');
         else if (data.role === 'seller') navigate('/seller/orders');
+        else if (data.role === 'administrator') navigate('/admin/manage');
         else navigate('');
       })
       .catch(() => setLoginInvalid(false));
