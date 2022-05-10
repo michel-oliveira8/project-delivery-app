@@ -30,6 +30,7 @@ const createAsAdmin = async (req, res) => {
     const { name, email, password, role } = req.body;
   
     const createUser = await services.create(name, email, md5(password), role);
+    console.log(createUser);
     
     return res.status(createUser.status).json(createUser.message);
   } catch (error) {

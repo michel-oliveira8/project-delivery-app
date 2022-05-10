@@ -1,23 +1,43 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 function AdminCreateUser() {
   const [registerInvalid, setRegisterInvalid] = useState(true);
+  const [token, setToken] = useState('');
 
   const EMAIL_VALIDATION = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+
+  useEffect(() => {
+    setToken(JSON.parse(localStorage.getItem('user')).token);
+  }, []);
 
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { isValid },
   } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      role: 'seller',
+    },
   });
 
+  const resetForm = () => {
+    resetField('name');
+    resetField('email');
+    resetField('password');
+    resetField('role');
+  };
+
   const onSubmit = (data) => {
-    axios.post('http://localhost:3001/register/admin', data)
-      .then(() => setRegisterInvalid(true))
+    console.log(token);
+    axios.post('http://localhost:3001/register/admin', data, { headers: { authorization: token } })
+      .then(() => {
+        setRegisterInvalid(true);
+        resetForm();
+      })
       .catch(() => setRegisterInvalid(false));
   };
 
@@ -84,7 +104,7 @@ function AdminCreateUser() {
       <div>
         <p
           hidden={ registerInvalid }
-          data-testid="common_register__element-invalid_register"
+          data-testid="admin_manage__element-invalid-register"
         >
           Dados inválidos
         </p>
