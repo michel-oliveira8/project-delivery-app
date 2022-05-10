@@ -6,6 +6,7 @@ function StatusOrder() {
   const [order, setOrder] = useState([]);
 
   const navigate = useNavigate();
+  const MAX = 10;
 
   useEffect(() => {
     JSON.parse(localStorage.getItem('user'));
@@ -16,44 +17,50 @@ function StatusOrder() {
 
   function formatDate(saleDate) {
     const date = new Date(saleDate);
-    const newDate = date.getDate();
-    const newMonth = date.getMonth();
-    const TWO = -2;
-    const newYear = date.getFullYear().toString().substr(TWO);
+    const newDate = date.getDate() >= MAX ? date.getDate() : `0${date.getDate()}`;
+    const newMonth = date.getMonth() + 1 >= MAX
+      ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+    const newYear = date.getFullYear();
     return `${newDate}/${newMonth}/${newYear}`;
   }
 
   return (
     <div>
-      {order.map(({ userId, status, saleDate, totalPrice }) => (
+      {order.map((data) => (
         <button
           type="button"
-          key={ userId }
-          onClick={ () => navigate(`/customer/orders/${userId}`) }
+          key={ data.id }
+          onClick={ () => navigate(`/customer/orders/${data.id}`) }
         >
-          <table>
-            <tr>
-              <td
-                data-testid={ `customer_orders__element-order-${userId}` }
-              >
-                { `Pedido 000${userId}` }
-              </td>
-              <td
-                data-testid={ `customer_orders__element-delivery-status-${userId}` }
-                type="button"
-              >
-                { status }
-              </td>
-              <td
-                data-testid={ `customer_orders__element-order-date-${userId}` }
-              >
-                { formatDate(saleDate) }
-              </td>
-              <td>
-                { `R$${totalPrice}` }
-              </td>
-            </tr>
-          </table>
+          <div>
+            <span
+              data-testid={ `customer_orders__element-order-id-${data.id}` }
+            >
+              { `Pedido 000${data.id}` }
+            </span>
+          </div>
+          <div>
+            <span
+              data-testid={ `customer_orders__element-delivery-status-${data.id}` }
+              type="button"
+            >
+              { data.status }
+            </span>
+          </div>
+          <div>
+            <span
+              data-testid={ `customer_orders__element-order-date-${data.id}` }
+            >
+              { formatDate(data.saleDate) }
+            </span>
+          </div>
+          <div>
+            <span
+              data-testid={ `customer_orders__element-card-price-${data.id}` }
+            >
+              { data.totalPrice.replace('.', ',') }
+            </span>
+          </div>
 
         </button>
       ))}

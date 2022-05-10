@@ -22,7 +22,6 @@ function Routes() {
 
   return (
     <Switch>
-      {console.log(rota)}
       <Route
         element={ loggedIn ? <Home /> : <Navigate to="/login" /> }
         path="/"
