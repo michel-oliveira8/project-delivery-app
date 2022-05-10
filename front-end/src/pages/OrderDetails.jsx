@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import NavBar from '../components/NavBar';
 // import { useParams } from 'react-router-dom';
 
 function OrderDetails() {
-  const [order, setOrder] = useState({});
-  console.log(order);
+  // const [order, setOrder] = useState({});
 
   const nomeDosCamposTabela = [
     'Item',
