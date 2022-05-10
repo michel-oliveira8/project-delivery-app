@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes as Switch, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -11,14 +11,28 @@ import SellerOrders from './pages/SellerOrders';
 
 function Routes() {
   const loggedIn = false;
+  const [rota, setRota] = useState('');
+
+  useEffect(() => {
+    const localStg = JSON.parse(localStorage.getItem('user'));
+    if (localStg) {
+      setRota(localStg.role);
+    }
+  }, [rota]);
 
   return (
     <Switch>
+      {console.log(rota)}
       <Route
         element={ loggedIn ? <Home /> : <Navigate to="/login" /> }
         path="/"
       />
-      <Route element={ <Login /> } path="/login" />
+      <Route
+        element={
+          rota === '' ? <Login /> : <Navigate to={ `/${rota}/products` } />
+        }
+        path="/login"
+      />
       <Route element={ <Register /> } path="/register" />
       <Route element={ <Client /> } path="/customer/products" />
       <Route element={ <Checkout /> } path="/customer/checkout" />
