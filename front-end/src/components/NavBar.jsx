@@ -24,7 +24,7 @@ function NavBar() {
       </a>
       <a
         hidden={ occupation === 'seller' }
-        href="/customer/checkout"
+        href="/customer/orders"
         data-testid="customer_products__element-navbar-link-orders"
       >
         MEUS PEDIDOS
