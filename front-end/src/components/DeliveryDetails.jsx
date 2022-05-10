@@ -18,6 +18,7 @@ function DeliveryDetails() {
       totalPrice: 1,
       deliveryAddress: '',
       deliveryNumber: '',
+      cart: [],
     },
   );
 
@@ -38,6 +39,7 @@ function DeliveryDetails() {
         totalPrice,
         deliveryAddress,
         deliveryNumber,
+        cart,
       },
     );
   }, [userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, cart]);
@@ -87,7 +89,7 @@ function DeliveryDetails() {
             onChange={ handleChange }
           >
             {sellerList.map(({ name, id }) => (
-              <option key={ id } value={ name }>{ name }</option>
+              <option key={ id } value={ id }>{ name }</option>
             ))}
           </select>
         </label>

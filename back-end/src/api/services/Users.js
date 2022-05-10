@@ -24,7 +24,16 @@ const findByRole = async (role) => {
   return { message: usersList, status: 201 };
 };
 
+const findUser = async (id) => {
+  const userSelected = await user.findOne({ where: { id } });
+
+  if (!userSelected) return { status: 404, message: { error: 'not found' } };
+
+  return { message: userSelected, status: 201 };
+};
+
 module.exports = {
   create,
   findByRole,
+  findUser,
 };

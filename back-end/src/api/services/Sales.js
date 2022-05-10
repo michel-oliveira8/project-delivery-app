@@ -30,16 +30,22 @@ const findAll = async () => {
   ],
 })).map((salesP) => salesP.get({ plain: true }));
 
-console.log(sales);
-
   return sales;
 };
 
-const findById = async (id) => sale.findOne({ where: { id } });
+const findById = async (id) => {
+  const saleById = await sale.findOne({ 
+  where: { id },
+  include: [
+    { model: salesProduct, as: 'salesInfo', include: [{ model: product, as: 'products' }] },
+  ],
+});
+
+return saleById;
+};
 
 module.exports = {
   create,
   findAll,
   findById,
-  // createSalesProducts,
 };

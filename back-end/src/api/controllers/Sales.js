@@ -30,9 +30,9 @@ const findAll = async (req, res) => {
 const findById = async (req, res) => {
   try {
     const { id } = req.params;
-    const sale = await services.findById(Number(id));
+    const saleById = await services.findById(id);
 
-    return res.status(200).json(sale);
+    return res.status(200).json(saleById);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
