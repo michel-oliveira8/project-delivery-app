@@ -6,9 +6,13 @@ const SalesProduct = (sequelize, DataTypes) => {
   }, { tableName: 'salesProducts', underscored: true, timestamps: false});
 
   SalesProduct.associate = (models) => {
-    SalesProduct.belongsTo(models.sale, { foreignKey: "id", as: "sale" });
+    SalesProduct.hasOne(models.product, 
+      { foreignKey: "id" }
+    );
 
-    SalesProduct.belongsTo(models.product, { foreignKey: "id", as: "product" });
+    SalesProduct.belongsTo(models.sale, 
+      { foreignKey: "id" }
+    )
   };
 
   return SalesProduct;
