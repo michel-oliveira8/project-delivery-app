@@ -1,8 +1,7 @@
-/* eslint-disable react/prop-types */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import NavBar from '../components/NavBar';
 import { useParams } from 'react-router-dom';
+import NavBar from '../components/NavBar';
 
 function OrderDetails() {
   const [order, setOrder] = useState([]);
@@ -16,7 +15,6 @@ function OrderDetails() {
   const MAX = 10;
 
   const delivId = 'customer_order_details__element-order-details-label-delivery-status';
-
 
   const nomeDosCamposTabela = [
     'Item',
@@ -48,7 +46,6 @@ function OrderDetails() {
           .then(({ data: seller }) => setSellerName(seller.name));
       });
   }, [id]);
-
 
   return (
     <div>
@@ -136,7 +133,6 @@ function OrderDetails() {
             ))}
           </tbody>
         </table>
-
         <h3 data-testid="customer_order_details__element-order-total-price">
           {`R$: ${Number(total).toFixed(2).replace('.', ',')}` }
         </h3>
