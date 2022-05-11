@@ -26,6 +26,13 @@ const findByRole = async (role) => {
   return { message: usersList, status: 201 };
 };
 
+const findUser = async (id) => {
+  const userSelected = await user.findOne({ where: { id } });
+
+  if (!userSelected) return { status: 404, message: { error: 'not found' } };
+
+  return { message: userSelected, status: 201 };
+};
 const findAllAsAdmin = async (authorization) => {
   const valid = jwt.decode(authorization);
   if (!valid || valid.role !== 'administrator') {
@@ -39,5 +46,6 @@ const findAllAsAdmin = async (authorization) => {
 module.exports = {
   create,
   findByRole,
+  findUser,
   findAllAsAdmin,
 };

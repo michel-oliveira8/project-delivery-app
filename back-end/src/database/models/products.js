@@ -6,7 +6,8 @@ const Product = (sequelize, DataTypes) => {
   }, { tableName: 'products'});
 
   Product.associate = (models) => {
-    Product.hasMany(models.salesProduct, {
+    Product.belongsToMany(models.salesProduct, {
+      through: '',
       foreignKey: "productId",
       as: "product",
     });

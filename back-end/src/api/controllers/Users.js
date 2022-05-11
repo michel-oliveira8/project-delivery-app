@@ -25,6 +25,18 @@ const findByRole = async (req, res) => {
   }
 };
 
+const findUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const user = await services.findUser(id);
+
+    return res.status(200).json(user.message);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+
 const createAsAdmin = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -52,6 +64,8 @@ const findAllAsAdmin = async (req, res) => {
 module.exports = {
   create,
   findByRole,
+
+  findUser,
   createAsAdmin,
   findAllAsAdmin,
 };
