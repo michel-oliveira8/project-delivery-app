@@ -12,6 +12,8 @@ function NavBar() {
 
   const changeLogout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('pedidos');
+    localStorage.removeItem('carrinho');
   };
 
   return (
